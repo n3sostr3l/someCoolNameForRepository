@@ -1,12 +1,18 @@
 name: ${NAME}
 version: ${VERSION}
 api-version: ${MINECRAFT_VERSION}
-main: ru.joutak.template.EmptyPlugin
-description: 'A template plugin'
-authors: ['EnderDissa', 'Stunnerer', 's4dnex']
-contributors: ['technosimp']
+main: ru.joutak.template.SomeCoolPlugin
+description: 'A cool plugin'
+authors: ['V7Zee']
+contributors: []
 website: ${WEBSITE}
 
 depend: []
 libraries:
   - 'org.projectlombok:lombok:${LOMBOK_VERSION}'
+
+commands:
+  coolplugin:
+    description: General command of the coolest plugin ever
+    usage: /coolplugin
+
