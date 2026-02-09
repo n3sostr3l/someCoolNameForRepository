@@ -1,4 +1,4 @@
-package ru.joutak.someCoolPlugin;
+package ru.joutak.template;
 
 import org.bukkit.event.*;
 import org.bukkit.entity.*;
@@ -10,11 +10,10 @@ public class PlayerDeathListener implements Listener{
     public void onPlayerDeath(PlayerDeathEvent evt){
         Player player = evt.getPlayer();
 
-        if(Fight.isFightActive()){
+        if(!Fight.isFightActive()){
             Fight.lastWave().bossBar.removePlayer(player);
             Fight.lastWave().clear(player.getWorld());
             Fight.clear();
-
         }
     }
 }

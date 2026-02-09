@@ -1,4 +1,4 @@
-package ru.joutak.someCoolPlugin;
+package ru.joutak.template;
 
 import org.bukkit.event.*;
 import org.bukkit.entity.*;
@@ -8,8 +8,8 @@ public class MobDeathListener implements Listener{
 
     @EventHandler
     public void onMobDeath(EntityDeathEvent evt){
-        Entity e = (Entity)evt.getEntity();
-        Fight.lastWave().bossBar.setProgress(1.0 - (Fight.lastWave().mobCap - Fight.lastWave().aliveMobs.size()) / Fight.lastWave().mobCap);
+        Entity e = (Entity) evt.getEntity();
+
         if(Fight.isCurrentWaveMob(e)){
             Fight.removeMobFromCurrentWave(e);
         }

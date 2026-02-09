@@ -3,7 +3,7 @@ version: ${VERSION}
 api-version: ${MINECRAFT_VERSION}
 main: ru.joutak.template.SomeCoolPlugin
 description: 'A cool plugin'
-authors: ['V7Zee']
+authors: ['V7Zeee']
 contributors: []
 website: ${WEBSITE}
 
