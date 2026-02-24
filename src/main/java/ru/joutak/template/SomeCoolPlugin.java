@@ -287,10 +287,272 @@ public final class SomeCoolPlugin extends JavaPlugin {
                     first.perform();
                 }
                 break;
-                case "3":{
-                    player.sendMessage("");
+                case "3": {
+
+                    final int wave1Count = 12 + radius;
+                    final int wave2Count = 16 + radius;
+                    final int wave3Count = 8 + radius / 2;
+                    final int wave4Count = 18 + radius;
+                    final int wave5Support = 4 + radius / 2;
+
+                    Fight fight = new Fight();
+
+                    //
+                    class FirstWaveCallback implements WaveEnding {
+                        @Override
+                        public void perform() {
+
+                            ThreadLocalRandom r = ThreadLocalRandom.current();
+                            double roll = r.nextDouble();
+
+                            if (roll < 0.4) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.REGENERATION,
+                                        20 * 30,
+                                        1
+                                ));
+                            } else if (roll < 0.7) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.RESISTANCE,
+                                        20 * 35,
+                                        1
+                                ));
+                            } else if (roll < 0.9) {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1)
+                                );
+                            } else {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.NETHERITE_SCRAP, 1)
+                                );
+                            }
+                        }
+                    }
+
+                    Wave first = new Wave(player, new FirstWaveCallback(), wave1Count, 15, BarColor.GREEN) {
+                        @Override
+                        public void perform() {
+                            begin();
+                            long delay = 0L;
+
+                            for (int i = 0; i < wave1Count; i++) {
+                                Location loc = findSpawnBlock(center, radius, heightBoundary);
+
+                                if (ThreadLocalRandom.current().nextDouble() < 0.7) {
+                                    spawnMob(loc, EntityType.ZOMBIE,
+                                            world, Sound.ENTITY_ZOMBIE_AMBIENT, this, delay);
+                                } else {
+                                    spawnMob(loc, EntityType.CAVE_SPIDER,
+                                            world, Sound.ENTITY_SPIDER_AMBIENT, this, delay);
+                                }
+
+                                delay += 5L;
+                            }
+                        }
+                    };
+                    fight.addWave(first);
+
+                    //
+                    class SecondWaveCallback implements WaveEnding {
+                        @Override
+                        public void perform() {
+
+                            ThreadLocalRandom r = ThreadLocalRandom.current();
+                            double roll = r.nextDouble();
+
+                            if (roll < 0.35) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.FIRE_RESISTANCE,
+                                        20 * 60,
+                                        2
+                                ));
+                            } else if (roll < 0.7) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.STRENGTH,
+                                        20 * 30,
+                                        1
+                                ));
+                            } else if (roll < 0.9) {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 2)
+                                );
+                            } else {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.TOTEM_OF_UNDYING, 1)
+                                );
+                            }
+                        }
+                    }
+
+                    Wave second = new Wave(player, new SecondWaveCallback(), wave2Count, 20, BarColor.RED) {
+                        @Override
+                        public void perform() {
+                            begin();
+                            long delay = 5 * 20L;
+
+                            for (int i = 0; i < wave2Count; i++) {
+                                Location loc = findSpawnBlock(center, radius, heightBoundary);
+
+                                spawnMob(loc, EntityType.BLAZE,
+                                        world, Sound.ENTITY_BLAZE_AMBIENT, this, delay);
+
+                                if (ThreadLocalRandom.current().nextDouble() < 0.15) {
+                                    spawnMob(loc, EntityType.GHAST,
+                                            world, Sound.ENTITY_GHAST_SCREAM, this, delay + 5L);
+                                }
+
+                                delay += 7L;
+                            }
+                        }
+                    };
+                    fight.addWave(second);
+
+                    //
+                    class ThirdWaveCallback implements WaveEnding {
+                        @Override
+                        public void perform() {
+
+                            ThreadLocalRandom r = ThreadLocalRandom.current();
+                            double roll = r.nextDouble();
+
+                            if (roll < 0.4) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.RESISTANCE,
+                                        20 * 45,
+                                        1
+                                ));
+                            } else if (roll < 0.7) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.REGENERATION,
+                                        20 * 35,
+                                        2
+                                ));
+                            } else if (roll < 0.9) {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.DIAMOND_AXE, 1)
+                                );
+                            } else {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.TOTEM_OF_UNDYING, 1)
+                                );
+                            }
+                        }
+                    }
+
+                    Wave third = new Wave(player, new ThirdWaveCallback(), wave3Count, 25, BarColor.YELLOW) {
+                        @Override
+                        public void perform() {
+                            begin();
+                            long delay = 10 * 20L;
+
+                            for (int i = 0; i < wave3Count; i++) {
+
+                                spawnRandomCreakingColumn(player, 1, radius);
+
+                                if (ThreadLocalRandom.current().nextDouble() < 0.1) {
+                                    Location loc = findSpawnBlock(center, radius, heightBoundary);
+                                    spawnMob(loc, EntityType.PHANTOM,
+                                            world, Sound.ENTITY_PHANTOM_AMBIENT, this, delay);
+                                }
+
+                                delay += 20L;
+                            }
+                        }
+                    };
+                    fight.addWave(third);
+
+                    //
+                    class FourthWaveCallback implements WaveEnding {
+                        @Override
+                        public void perform() {
+
+                            ThreadLocalRandom r = ThreadLocalRandom.current();
+                            double roll = r.nextDouble();
+
+                            if (roll < 0.3) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.REGENERATION,
+                                        20 * 40,
+                                        2
+                                ));
+                            } else if (roll < 0.6) {
+                                player.addPotionEffect(new PotionEffect(
+                                        PotionEffectType.STRENGTH,
+                                        20 * 35,
+                                        2
+                                ));
+                            } else if (roll < 0.85) {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 2)
+                                );
+                            } else {
+                                player.getInventory().addItem(
+                                        new ItemStack(Material.TOTEM_OF_UNDYING, 1)
+                                );
+                            }
+                        }
+                    }
+
+                    Wave fourth = new Wave(player, new FourthWaveCallback(), wave4Count, 30, BarColor.PURPLE) {
+                        @Override
+                        public void perform() {
+                            begin();
+                            long delay = 15 * 20L;
+
+                            for (int i = 0; i < wave4Count; i++) {
+                                Location loc = findSpawnBlock(center, radius, heightBoundary);
+
+                                if (ThreadLocalRandom.current().nextDouble() < 0.6) {
+                                    spawnMob(loc, EntityType.PIGLIN_BRUTE,
+                                            world, Sound.ENTITY_PIGLIN_BRUTE_ANGRY, this, delay);
+                                } else {
+                                    spawnMob(loc, EntityType.WITHER_SKELETON,
+                                            world, Sound.ENTITY_WITHER_SPAWN, this, delay);
+                                }
+
+                                delay += 8L;
+                            }
+                        }
+                    };
+                    fight.addWave(fourth);
+
+                    //
+                    class FifthWaveCallback implements WaveEnding {
+                        @Override
+                        public void perform() {
+                            player.giveExpLevels(30);
+                            player.getWorld().playSound(
+                                    player.getLocation(),
+                                    Sound.UI_TOAST_CHALLENGE_COMPLETE,
+                                    1.0f,
+                                    1.0f
+                            );
+                        }
+                    }
+
+                    Wave fifth = new Wave(player, new FifthWaveCallback(), 1, 40, BarColor.BLUE) {
+                        @Override
+                        public void perform() {
+                            begin();
+                            long delay = 20 * 20L;
+
+                            Location bossLoc = findSpawnBlock(center, radius, heightBoundary);
+                            spawnMob(bossLoc, EntityType.WARDEN,
+                                    world, Sound.ENTITY_WARDEN_EMERGE, this, delay);
+
+                            for (int i = 0; i < wave5Support; i++) {
+                                Location loc = findSpawnBlock(center, radius, heightBoundary);
+                                spawnMob(loc, EntityType.PHANTOM,
+                                        world, Sound.ENTITY_PHANTOM_AMBIENT, this, delay + i * 15L);
+                            }
+                        }
+                    };
+                    fight.addWave(fifth);
+                    first.perform();
+
                 }
                 break;
+
                 default: player.sendMessage("Такого уровня сложности нет:( Есть только 1-3 уровни.");
             }
 
@@ -342,13 +604,13 @@ public final class SomeCoolPlugin extends JavaPlugin {
             public void run(){
                 Entity ent = world.spawnEntity(loc, e);
                 world.spawnParticle(
-                        Particle.FLAME,  // тип партикла
-                        loc.getX(),      // координата X
-                        loc.getY() + 1,  // немного выше головы
-                        loc.getZ(),      // координата Z
-                        30,              // количество частиц
-                        0.3, 0.5, 0.3,  // смещение по X, Y, Z (для рассеивания)
-                        0.1              // скорость частиц
+                        Particle.FLAME,
+                        loc.getX(),
+                        loc.getY() + 1,
+                        loc.getZ(),
+                        30,
+                        0.3, 0.5, 0.3,
+                        0.1
                 );
                 world.playSound(loc, s, 1.0f, ThreadLocalRandom.current().nextFloat(0.5f,1.0f));
                 w.addMob(ent);
@@ -358,7 +620,12 @@ public final class SomeCoolPlugin extends JavaPlugin {
 
     public void spawnRandomCreakingColumn(Player p, int amount, int radius) {
         World world = p.getWorld();
-
+        world.playSound(
+                p.getLocation(),
+                Sound.ENTITY_WARDEN_HEARTBEAT,
+                1.0f,
+                1.0f
+        );
         for (int i = 0; i < amount; i++) {
 
             Location base = findSpawnBlock(p.getLocation(), radius, 10);
@@ -374,7 +641,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
             if (!ground.getBlock().getType().isSolid()) continue;
 
             int height = ThreadLocalRandom.current().nextInt(1, 7);
-            long delay = i * 10L;
+            long delay = i * 20L;
 
             for (int y = 1; y <= height; y++) {
                 Location place = ground.clone().add(0, y, 0);
@@ -406,6 +673,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                                 1.0f,
                                 1.0f
                         );
+
                     },
                     delay + (height + 1) * 3L
             );
