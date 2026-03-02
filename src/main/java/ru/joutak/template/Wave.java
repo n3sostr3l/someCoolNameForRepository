@@ -18,36 +18,19 @@ public class Wave{
     protected  Player linkedTo;
     protected  WaveEnding endCallback;
     protected  BossBar bossBar;
-    protected  int segments;
 
-    public Wave(Player linkedTo, WaveEnding endCallback, int mobCap, int seg){
-        this.segments = seg;
+    public Wave(Player linkedTo, WaveEnding endCallback, int mobCap, BarStyle seg){
         this.linkedTo = linkedTo;
         this.endCallback = endCallback;
         this.mobCap = mobCap;
-        BarStyle style = switch(segments){
-            case 6-> style = BarStyle.SEGMENTED_6;
-            case 12-> style = BarStyle.SEGMENTED_12;
-            case 20-> style = BarStyle.SEGMENTED_20;
-            default-> style = BarStyle.SEGMENTED_10;
-        };
-        this.bossBar = Bukkit.createBossBar(String.format("Yet Another Wave"), BarColor.GREEN, style);
+        this.bossBar = Bukkit.createBossBar(String.format("Yet Another Wave"), BarColor.GREEN, seg);
     }
 
-    public Wave(Player linkedTo, WaveEnding endCallback, int mobCap, int segments, BarColor barColor){
-        this.segments = segments;
+    public Wave(Player linkedTo, WaveEnding endCallback, int mobCap, BarStyle seg, BarColor barColor){
         this.linkedTo = linkedTo;
         this.endCallback = endCallback;
         this.mobCap = mobCap;
-        BarStyle style;
-        switch(segments){
-            case 6: style = BarStyle.SEGMENTED_6;
-            case 10: style = BarStyle.SEGMENTED_10;
-            case 12: style = BarStyle.SEGMENTED_12;
-            case 20: style = BarStyle.SEGMENTED_20;
-            default: style = BarStyle.SEGMENTED_10;
-        }
-        this.bossBar = Bukkit.createBossBar(String.format("Yet Another Wave"), barColor, style);
+        this.bossBar = Bukkit.createBossBar(String.format("Yet Another Wave"), barColor, seg);
     }
 
     public void addMob(Entity e){

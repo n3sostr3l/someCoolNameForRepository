@@ -1,12 +1,12 @@
 package ru.joutak.template;
+import com.google.j2objc.annotations.Property;
 import org.bukkit.entity.*;
 
 import java.util.*;
 
 public class Fight{
-    private static ArrayList<Wave> waves = new ArrayList<>();
-    private static Wave currentWave;
-    
+    private ArrayList<Wave> waves = new ArrayList<>();
+    private Wave currentWave;
 
     public void addWave(Wave w){
         waves.add(w);
@@ -16,20 +16,20 @@ public class Fight{
         if(!waves.isEmpty()) waves.remove(waves.getLast());
     }
 
-    public static Wave lastWave(){
-        if(!waves.isEmpty()) return waves.getFirst();
+    public Wave lastWave(){
+        if(!(waves.isEmpty())) return waves.getFirst();
         Wave o = null;
         return o;
     }
 
-    public static void removeMobFromCurrentWave(Entity e){
-        if(!waves.isEmpty()) {
+    public void removeMobFromCurrentWave(Entity e){
+        if(!(waves.isEmpty())) {
             currentWave = waves.getFirst();
             currentWave.removeMob(e);
         }
     }
 
-    public static boolean isCurrentWaveMob(Entity e){
+    public boolean isCurrentWaveMob(Entity e){
         if(!waves.isEmpty()) {
             currentWave = waves.getFirst();
             return currentWave.isWaveMob(e);
@@ -37,7 +37,7 @@ public class Fight{
         return false;
     }
 
-    public static boolean isCurrentWaveFinished() {
+    public boolean isCurrentWaveFinished() {
         if (!waves.isEmpty()) {
             currentWave = waves.getFirst();
             return currentWave.isWaveFinished();
@@ -45,7 +45,7 @@ public class Fight{
         return false;
     }
 
-    public static void endWave(){
+    public void endWave(){
         if(!waves.isEmpty()) {
             currentWave = waves.getFirst();
             currentWave.bossBar.removePlayer(currentWave.linkedTo);
@@ -56,11 +56,11 @@ public class Fight{
         }
     }
 
-    public static boolean isFightActive(){
+    public boolean isFightActive(){
         return ((!waves.isEmpty())&&(waves.getFirst().isWaveActive()));
     }
 
-    public static void clear(){
+    public void clear(){
         for(Wave w: waves){
             w.clear(w.linkedTo.getWorld());
             waves.remove(w);

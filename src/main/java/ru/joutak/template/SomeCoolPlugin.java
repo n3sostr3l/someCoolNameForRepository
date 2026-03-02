@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import io.papermc.paper.datacomponent.item.Weapon;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -131,7 +132,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                     final int waveMobCount = 10;
                     Fight fight = new Fight();
 
-                    Wave first = new Wave(player, new FirstWaveCallback(), waveMobCount, 10){
+                    Wave first = new Wave(player, new FirstWaveCallback(), waveMobCount, BarStyle.SEGMENTED_10){
                         @Override
                         public void perform() {
                             begin();
@@ -151,7 +152,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                     fight.addWave(first);
 
                     final int secondWaveCount = waveMobCount*2;
-                    Wave second = new Wave(player, new SecondWaveCallback(), secondWaveCount, 20, BarColor.BLUE){
+                    Wave second = new Wave(player, new SecondWaveCallback(), secondWaveCount, BarStyle.SEGMENTED_20, BarColor.BLUE){
                         @Override
                         public void perform() {
                             begin();
@@ -230,7 +231,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                     final int waveMobCount = 2*radius;
                     Fight fight = new Fight();
 
-                    Wave first = new Wave(player, new FirstWaveCallback(), waveMobCount, 10){
+                    Wave first = new Wave(player, new FirstWaveCallback(), waveMobCount, BarStyle.SEGMENTED_10){
                         @Override
                         public void perform() {
                             begin();
@@ -250,7 +251,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                     fight.addWave(first);
 
                     final int secondWaveCount = (int) (waveMobCount*1.2);
-                    Wave second = new Wave(player, new SecondWaveCallback(), secondWaveCount, 20, BarColor.BLUE){
+                    Wave second = new Wave(player, new SecondWaveCallback(), secondWaveCount, BarStyle.SEGMENTED_12, BarColor.BLUE){
                         @Override
                         public void perform() {
                             begin();
@@ -269,7 +270,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     };
 
-                    Wave third = new Wave(player, new ThirdWaweCallback(), secondWaveCount, 20, BarColor.YELLOW){
+                    Wave third = new Wave(player, new ThirdWaweCallback(), secondWaveCount, BarStyle.SEGMENTED_10, BarColor.YELLOW){
                         @Override
                         public void perform(){
                             begin();
@@ -329,7 +330,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     }
 
-                    Wave first = new Wave(player, new FirstWaveCallback(), wave1Count, 15, BarColor.GREEN) {
+                    Wave first = new Wave(player, new FirstWaveCallback(), wave1Count, BarStyle.SEGMENTED_20, BarColor.GREEN) {
                         @Override
                         public void perform() {
                             begin();
@@ -384,7 +385,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     }
 
-                    Wave second = new Wave(player, new SecondWaveCallback(), wave2Count, 20, BarColor.RED) {
+                    Wave second = new Wave(player, new SecondWaveCallback(), wave2Count, BarStyle.SEGMENTED_10, BarColor.RED) {
                         @Override
                         public void perform() {
                             begin();
@@ -439,7 +440,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     }
 
-                    Wave third = new Wave(player, new ThirdWaveCallback(), wave3Count, 25, BarColor.YELLOW) {
+                    Wave third = new Wave(player, new ThirdWaveCallback(), wave3Count, BarStyle.SEGMENTED_20, BarColor.YELLOW) {
                         @Override
                         public void perform() {
                             begin();
@@ -493,7 +494,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     }
 
-                    Wave fourth = new Wave(player, new FourthWaveCallback(), wave4Count, 30, BarColor.PURPLE) {
+                    Wave fourth = new Wave(player, new FourthWaveCallback(), wave4Count, BarStyle.SEGMENTED_20, BarColor.PURPLE) {
                         @Override
                         public void perform() {
                             begin();
@@ -530,7 +531,7 @@ public final class SomeCoolPlugin extends JavaPlugin {
                         }
                     }
 
-                    Wave fifth = new Wave(player, new FifthWaveCallback(), 1, 40, BarColor.BLUE) {
+                    Wave fifth = new Wave(player, new FifthWaveCallback(), 1, BarStyle.SEGMENTED_20, BarColor.BLUE) {
                         @Override
                         public void perform() {
                             begin();
